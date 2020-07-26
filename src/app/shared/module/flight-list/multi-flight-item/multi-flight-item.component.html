@@ -1,4 +1,4 @@
-<div class="card my-1 py-2 px-1">
+<div class="card my-1 py-2 px-1 animated zoomIn">
   <div class="row m-0">
     <div
       class="col-sm-12 col-md-2 col-lg-2 p-0 d-flex justify-content-center align-items-center text-primary"
@@ -76,8 +76,14 @@
 
   <mat-accordion [displayMode]="'flat'" class="mat-accordion--flat">
     <mat-expansion-panel #multiFlightDetails>
-      <app-flight-info [flight]="layoverFlight.flight1" [mode]="'multi'"></app-flight-info>
-      <app-flight-info [flight]="layoverFlight.flight2" [mode]="'multi'"></app-flight-info>
+      <app-flight-info
+        [flight]="layoverFlight.flight1"
+        [mode]="'multi'"
+      ></app-flight-info>
+      <app-flight-info
+        [flight]="layoverFlight.flight2"
+        [mode]="'multi'"
+      ></app-flight-info>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
