@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LayoverFlight } from '../../../model/misc.model';
 
 @Component({
@@ -9,9 +9,13 @@ import { LayoverFlight } from '../../../model/misc.model';
 export class MultiFlightItemComponent implements OnInit {
   @Input() layoverFlight: LayoverFlight = new LayoverFlight();
   @Input() passengers = 1;
+  @Output() flightBooked = new EventEmitter();
 
   showDetails = false;
   constructor() {}
 
   ngOnInit(): void {}
+  bookFlight(): void {
+    this.flightBooked.emit();
+  }
 }

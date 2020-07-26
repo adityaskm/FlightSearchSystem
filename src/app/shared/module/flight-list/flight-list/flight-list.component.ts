@@ -43,6 +43,8 @@ export class FlightListComponent implements OnInit, OnChanges {
 
   MIN_FLIGHT_LAYOVER = 3000000;
 
+  flightBooked: Flight | LayoverFlight;
+
   constructor(
     private datePipe: DatePipe,
     private flightcalculator: FlightCalculatorService
@@ -83,6 +85,7 @@ export class FlightListComponent implements OnInit, OnChanges {
     if (changes.flightPriceRefiner) {
       this.refineFlightDisplayList();
     }
+    this.flightBooked = null;
   }
 
   transformDate(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Flight } from '../../../model/misc.model';
 
 @Component({
@@ -9,7 +9,13 @@ import { Flight } from '../../../model/misc.model';
 export class SingleFlightItemComponent implements OnInit {
   @Input() flight: Flight;
   @Input() passengers = 1;
+  @Output() flightBooked = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  bookFlight(): void {
+    this.flightBooked.emit();
+  }
 }
