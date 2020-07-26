@@ -124,7 +124,7 @@
                 class="flight-slider"
                 thumbLabel
                 [displayWith]="formatLabel"
-                [min]="1"
+                [min]="minFlightRefiner"
                 [max]="maxFlightPriceRefiner"
                 [disabled]="!flightSearchData"
                 [value]="flightPriceRefiner"
@@ -154,6 +154,8 @@
                 [flightList]="flightList"
                 [passengers]="flightSearchData.passengers"
                 [flightPriceRefiner]="flightPriceRefiner"
+                (maxFlightPriceRefiner)="setMaxFlightRefiner($event)"
+                (minFlightPriceRefiner)="setMinFlightRefiner($event)"
               ></app-flight-list>
             </div>
             <div
@@ -167,6 +169,8 @@
                 [flightList]="flightList"
                 [passengers]="flightSearchData.passengers"
                 [flightPriceRefiner]="flightPriceRefiner"
+                (maxFlightPriceRefiner)="setMaxFlightRefiner($event)"
+                (minFlightPriceRefiner)="setMinFlightRefiner($event)"
               ></app-flight-list>
             </div>
           </div>

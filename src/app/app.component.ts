@@ -24,7 +24,8 @@ export class AppComponent implements OnInit {
   displayResults = false;
 
   flightPriceRefiner = 500000;
-  maxFlightPriceRefiner = 500000;
+  maxFlightPriceRefiner = 10000;
+  minFlightRefiner = 1000000;
 
   private _flightList: Flight[];
   public get flightList(): Flight[] {
@@ -125,17 +126,29 @@ export class AppComponent implements OnInit {
     }
   }
 
-  sliderChanged(event: MatSliderChange) {
+  sliderChanged(event: MatSliderChange): void {
     this.flightPriceRefiner = event.value;
   }
 
-  formatLabel(value: number) {
+  setMaxFlightRefiner(event: number): void {
+    if (this.maxFlightPriceRefiner < event) {
+      this.maxFlightPriceRefiner = event;
+    }
+  }
+
+  setMinFlightRefiner(event: number): void {
+    if (this.minFlightRefiner > event) {
+      this.minFlightRefiner = event;
+    }
+  }
+
+  formatLabel(value: number): string {
     if (value >= 999999) {
       return Math.round(value / 1000000) + 'M';
     }
     if (value >= 1000) {
       return Math.round(value / 1000) + 'K';
     }
-    return value;
+    return value + '';
   }
 }
