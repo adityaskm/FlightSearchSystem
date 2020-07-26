@@ -1,0 +1,10 @@
+.th-date-picker-container {
+  position: relative;
+  .th-date-picker {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    width: 0;
+    left: 0;
+  }
+}

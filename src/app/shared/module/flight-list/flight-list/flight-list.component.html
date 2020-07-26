@@ -1,0 +1,10 @@
+<ng-container *ngFor="let flight of flightDisplayList">
+  <app-single-flight-item
+    [flight]="flight"
+    *ngIf="!flight['flight1']"
+  ></app-single-flight-item>
+  <app-multi-flight-item
+    [layoverFlight]="flight"
+    *ngIf="flight['flight1']"
+  ></app-multi-flight-item>
+</ng-container>
