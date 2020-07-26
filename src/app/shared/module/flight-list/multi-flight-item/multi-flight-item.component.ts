@@ -8,6 +8,9 @@ import { LayoverFlight } from '../../../model/misc.model';
 })
 export class MultiFlightItemComponent implements OnInit {
   @Input() layoverFlight: LayoverFlight = new LayoverFlight();
+  @Input() passengers = 1;
+
+  showDetails = false;
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,10 +1,29 @@
-<ng-container *ngFor="let flight of flightDisplayList">
-  <app-single-flight-item
-    [flight]="flight"
-    *ngIf="!flight['flight1']"
-  ></app-single-flight-item>
-  <app-multi-flight-item
-    [layoverFlight]="flight"
-    *ngIf="flight['flight1']"
-  ></app-multi-flight-item>
-</ng-container>
+<div class="px-2 pt-4">
+  <h6 class="text-muted text-center">
+    <span class="text-primary">
+      {{ origin }}
+    </span>
+    to
+    <span class="text-info">
+      {{ destination }}
+    </span>
+  </h6>
+  <p class="p-1 small text-center">
+    {{ flightDisplayList.length }} Flights Found
+  </p>
+</div>
+<hr class="m-0" />
+<perfect-scrollbar class="my-3 px-2 flight-list-container">
+  <ng-container *ngFor="let flight of flightDisplayListRefined">
+    <app-single-flight-item
+      [flight]="flight"
+      [passengers]="passengers"
+      *ngIf="!flight['flight1']"
+    ></app-single-flight-item>
+    <app-multi-flight-item
+      [layoverFlight]="flight"
+      [passengers]="passengers"
+      *ngIf="flight['flight1']"
+    ></app-multi-flight-item>
+  </ng-container>
+</perfect-scrollbar>

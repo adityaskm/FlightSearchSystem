@@ -14,3 +14,20 @@
     user-select: none;
   }
 }
+
+.mat-accordion--flat {
+  .mat-expansion-panel {
+    &.mat-expanded {
+      margin: 0.5rem -0.05rem;
+    }
+    box-shadow: none;
+    .mat-expansion-panel-body {
+      padding: 0;
+    }
+  }
+}
+
+.flight-slider {
+  width: 100%;
+  max-width: 400px;
+}

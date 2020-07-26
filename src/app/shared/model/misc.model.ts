@@ -9,6 +9,7 @@ export interface Flight {
   name: string;
   origin: string;
   price: number;
+  duration: Date;
 }
 
 export interface FlightSearchData {
@@ -17,6 +18,7 @@ export interface FlightSearchData {
   departure: Date;
   return?: Date;
   passengers: number;
+  flightType: FlightType;
 }
 
 export class LayoverFlight {

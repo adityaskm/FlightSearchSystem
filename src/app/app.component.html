@@ -4,19 +4,7 @@
 <div class="container-fluid mb-5">
   <div class="row">
     <div class="col-12 col-sm-12 col-md-4 col-lg-3">
-      <!-- <mat-tab-group mat-align-tabs="center">
-        <mat-tab label="One Way">
-          <div class="p-4">
-            Content 1
-          </div>
-        </mat-tab>
-        <mat-tab label="Return">
-          <div class="p-4">
-            Content 2
-          </div>
-        </mat-tab>
-      </mat-tab-group> -->
-      <div class="card">
+      <div class="card my-4">
         <ul class="nav nav-tabs">
           <li class="nav-item cursor-pointer">
             <a
@@ -36,104 +24,165 @@
           </li>
         </ul>
         <div class="card-body">
-          <form [formGroup]="flightSearchForm">
-            <div class="form-group">
-              <label for="flight-origin" class="text-secondary"
-                >Enter Origin City</label
-              >
-              <select
-                class="custom-select"
-                id="flight-origin"
-                formControlName="origin"
-                [class.is-invalid]="
-                  flightSearchForm.controls.origin.touched &&
-                  flightSearchForm.controls.origin.errors
-                "
-              >
-                <option [value]="origin" *ngFor="let origin of flightOrigins">
-                  {{ origin }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="flight-destination" class="text-secondary"
-                >Enter Destination City</label
-              >
-              <select
-                class="custom-select"
-                id="flight-destination"
-                formControlName="destination"
-                [class.is-invalid]="
-                  flightSearchForm.controls.destination.touched &&
-                  flightSearchForm.controls.destination.errors
-                "
-              >
-                <option
-                  [value]="destination"
-                  *ngFor="let destination of flightDestinations"
+          <div class="row">
+            <div class="col-12">
+              <form [formGroup]="flightSearchForm">
+                <div class="form-group">
+                  <label for="flight-origin" class="text-secondary"
+                    >Enter Origin City</label
+                  >
+                  <select
+                    class="custom-select"
+                    id="flight-origin"
+                    formControlName="origin"
+                    [class.is-invalid]="
+                      flightSearchForm.controls.origin.touched &&
+                      flightSearchForm.controls.origin.errors
+                    "
+                  >
+                    <ng-container *ngFor="let origin of flightOrigins">
+                      <option
+                        [value]="origin"
+                        *ngIf="
+                          flightSearchForm.controls.destination.value !== origin
+                        "
+                      >
+                        {{ origin }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="flight-destination" class="text-secondary"
+                    >Enter Destination City</label
+                  >
+                  <select
+                    class="custom-select"
+                    id="flight-destination"
+                    formControlName="destination"
+                    [class.is-invalid]="
+                      flightSearchForm.controls.destination.touched &&
+                      flightSearchForm.controls.destination.errors
+                    "
+                  >
+                    <ng-container
+                      *ngFor="let destination of flightDestinations"
+                    >
+                      <option
+                        [value]="destination"
+                        *ngIf="
+                          flightSearchForm.controls.origin.value !== destination
+                        "
+                      >
+                        {{ destination }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+                <app-date-picker formControlName="departure"
+                  >Departure Date</app-date-picker
                 >
-                  {{ destination }}
-                </option>
-              </select>
-            </div>
-            <app-date-picker formControlName="departure"
-              >Departure Date</app-date-picker
-            >
-            <app-date-picker formControlName="return" *ngIf="flightType === 'RETURN'"
-              >Return Date</app-date-picker
-            >
-            <div class="form-group">
-              <label for="flight-passengers" class="text-secondary"
-                >Passengers (1-10)</label
+                <app-date-picker
+                  formControlName="return"
+                  *ngIf="flightType === 'RETURN'"
+                  >Return Date</app-date-picker
+                >
+                <div class="form-group">
+                  <label for="flight-passengers" class="text-secondary"
+                    >Passengers (1-10)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="flight-passengers"
+                    formControlName="passengers"
+                    min="1"
+                    [class.is-invalid]="
+                      flightSearchForm.controls.passengers.touched &&
+                      flightSearchForm.controls.passengers.errors
+                    "
+                    max="10"
+                  />
+                </div>
+              </form>
+              <p class="text-danger">{{ formErrorMessage }}&nbsp;</p>
+              <button
+                type="button"
+                class="btn btn-primary my-2 mx-auto"
+                (click)="searchFlights()"
               >
-              <input
-                type="number"
-                class="form-control"
-                id="flight-passengers"
-                formControlName="passengers"
-                min="1"
-                [class.is-invalid]="
-                  flightSearchForm.controls.passengers.touched &&
-                  flightSearchForm.controls.passengers.errors
-                "
-                max="10"
-              />
+                Search
+              </button>
             </div>
-          </form>
-          <p class="text-danger">{{ formErrorMessage }}&nbsp;</p>
-          <button type="button" class="btn btn-primary my-2 mx-auto" (click)="searchFlights()">
-            Search
-          </button>
+          </div>
+          <div class="row">
+            <div class="col-12 text-center">
+              <p class="text-black-50 font-weight-500 mb-0 mt-3">
+                Refine Flight Price
+              </p>
+              <mat-slider
+                class="flight-slider"
+                thumbLabel
+                [displayWith]="formatLabel"
+                [min]="1"
+                [max]="maxFlightPriceRefiner"
+                [disabled]="!flightSearchData"
+                [value]="flightPriceRefiner"
+                (change)="sliderChanged($event)"
+              ></mat-slider>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="col-12 col-sm-12 col-md-8 col-lg-9">
-      <div class="row" *ngIf="flightSearchData">
+      <div class="card my-4">
+        <ng-container *ngIf="flightSearchData">
+          <div class="row m-0">
+            <div
+              class="p-0 border"
+              [ngClass]="{
+                'col-12': flightSearchData.flightType === 'ONE_WAY',
+                'col-sm-12 col-md-6 col-lg-6 ':
+                  flightSearchData.flightType === 'RETURN'
+              }"
+            >
+              <app-flight-list
+                [date]="flightSearchData.departure"
+                [origin]="flightSearchData.origin"
+                [destination]="flightSearchData.destination"
+                [flightList]="flightList"
+                [passengers]="flightSearchData.passengers"
+                [flightPriceRefiner]="flightPriceRefiner"
+              ></app-flight-list>
+            </div>
+            <div
+              class="col-sm-12 col-md-6 col-lg-6 p-0 border"
+              *ngIf="flightSearchData.flightType === 'RETURN'"
+            >
+              <app-flight-list
+                [date]="flightSearchData.return"
+                [origin]="flightSearchData.destination"
+                [destination]="flightSearchData.origin"
+                [flightList]="flightList"
+                [passengers]="flightSearchData.passengers"
+                [flightPriceRefiner]="flightPriceRefiner"
+              ></app-flight-list>
+            </div>
+          </div>
+        </ng-container>
         <div
-          [ngClass]="{
-            'col-12': flightType === 'ONE_WAY',
-            'col-sm-12 col-md-6 col-lg-6': flightType === 'RETURN'
-          }"
+          class="d-flex flex-column justify-content-center align-items-center p-5"
+          *ngIf="!flightSearchData"
         >
-          <app-flight-list
-            [date]="flightSearchData.departure"
-            [origin]="flightSearchData.origin"
-            [destination]="flightSearchData.destination"
-            [flightList]="flightList"
-            [passengers]="flightSearchData.passengers"
-          ></app-flight-list>
-        </div>
-        <div
-          class="col-sm-12 col-md-6 col-lg-6"
-          *ngIf="flightType === 'RETURN'"
-        >
-          <app-flight-list
-            [date]="flightSearchData.return"
-            [origin]="flightSearchData.destination"
-            [destination]="flightSearchData.origin"
-            [flightList]="flightList"
-            [passengers]="flightSearchData.passengers"
-          ></app-flight-list>
+          <h5 class="text-center text-muted m-5">
+            Where do you want to Travel?
+          </h5>
+          <img
+            alt=""
+            src="/assets/images/undraw_connected_world_wuay.svg"
+            class="w-50 m-4"
+          />
         </div>
       </div>
     </div>

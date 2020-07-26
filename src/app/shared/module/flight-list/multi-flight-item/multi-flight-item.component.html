@@ -1,3 +1,83 @@
-<p>{{ layoverFlight.flight1 | json }}</p>
-<p>{{ layoverFlight.flight2 | json }}</p>
-<p>{{ layoverFlight.price }}</p>
+<div class="card my-1 py-2 px-1">
+  <div class="row m-0">
+    <div
+      class="col-sm-12 col-md-2 col-lg-2 p-0 d-flex justify-content-center align-items-center text-primary"
+    >
+      <div class="row m-0">
+        <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-center text-primary">
+          Multiple
+        </div>
+        <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-center">
+          <span
+            class="small text-info"
+            (click)="multiFlightDetails.toggle(); showDetails = !showDetails"
+            >{{ !showDetails ? "Show Details" : "Hide Details" }}</span
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-2 col-lg-2 p-0 d-flex justify-content-center align-items-center"
+    >
+      <div class="row m-0">
+        <div
+          class="col-sm-6 col-md-12 col-lg-12 p-0 text-black-50 font-weight-bold text-center"
+        >
+          {{ layoverFlight.flight1.departureTime | twoDigit }}
+        </div>
+        <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-center">
+          <span class="small text-muted">{{
+            layoverFlight.flight1.origin | cityName
+          }}</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-2 col-lg-2 p-0 d-flex justify-content-center align-items-center"
+    >
+      <div class="row m-0">
+        <div
+          class="col-sm-6 col-md-12 col-lg-12 p-0 text-black-50 font-weight-bold text-center"
+        >
+          {{ layoverFlight.flight2.arrivalTime | twoDigit }}
+        </div>
+        <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-center">
+          <span class="small text-muted">{{
+            layoverFlight.flight2.destination | cityName
+          }}</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-2 col-lg-2 p-0 d-flex justify-content-center align-items-center"
+    >
+      <div class="row m-0">
+        <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-info text-center">
+          {{ layoverFlight | layoverFlightDuration | date: "hh:mm" }}
+        </div>
+        <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-center">
+          <span class="small text-muted">Total Duration</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-sm-12 col-md-2 col-lg-2 p-0 d-flex justify-content-center align-items-center"
+    >
+      <span class="text-danger">
+        {{ layoverFlight.price * passengers | currency: "INR" }}
+      </span>
+    </div>
+    <div
+      class="col-sm-12 col-md-2 col-lg-2 p-0 d-flex justify-content-center align-items-center"
+    >
+      <button class="btn btn-primary">Book</button>
+    </div>
+  </div>
+
+  <mat-accordion [displayMode]="'flat'" class="mat-accordion--flat">
+    <mat-expansion-panel #multiFlightDetails>
+      <app-flight-info [flight]="layoverFlight.flight1" [mode]="'multi'"></app-flight-info>
+      <app-flight-info [flight]="layoverFlight.flight2" [mode]="'multi'"></app-flight-info>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

@@ -8,6 +8,7 @@ import { Flight } from '../../../model/misc.model';
 })
 export class SingleFlightItemComponent implements OnInit {
   @Input() flight: Flight;
+  @Input() passengers = 1;
   constructor() {}
 
   ngOnInit(): void {}

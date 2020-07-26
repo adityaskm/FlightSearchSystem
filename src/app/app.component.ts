@@ -6,6 +6,8 @@ import {
   FlightSearchData,
 } from './shared/model/misc.model';
 import { ApiService } from './shared/services/api.service';
+import { FlightCalculatorService } from './shared/services/flight-calculator.service';
+import { MatSliderChange } from '@angular/material/slider';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,9 @@ export class AppComponent implements OnInit {
   formErrorMessage = ' ';
 
   displayResults = false;
+
+  flightPriceRefiner = 500000;
+  maxFlightPriceRefiner = 500000;
 
   private _flightList: Flight[];
   public get flightList(): Flight[] {
@@ -46,10 +51,10 @@ export class AppComponent implements OnInit {
   flightDestinations: string[] = [];
 
   flightSearchForm = new FormGroup({
-    origin: new FormControl('', [Validators.required]),
-    destination: new FormControl('', [Validators.required]),
-    departure: new FormControl(new Date(), [Validators.required]),
-    return: new FormControl(new Date()),
+    origin: new FormControl('Pune (PNQ)', [Validators.required]),
+    destination: new FormControl('Delhi (DEL)', [Validators.required]),
+    departure: new FormControl(new Date('2020/11/01'), [Validators.required]),
+    return: new FormControl(new Date('2020/11/02')),
     passengers: new FormControl(1, [
       Validators.required,
       Validators.min(1),
@@ -59,16 +64,22 @@ export class AppComponent implements OnInit {
 
   flightSearchData: FlightSearchData;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private flightCalculator: FlightCalculatorService
+  ) {}
 
   ngOnInit(): void {
     this.getFlightList();
   }
 
   getFlightList(): void {
-    this.apiService
-      .getFlightList()
-      .subscribe((flightList) => (this.flightList = flightList));
+    this.apiService.getFlightList().subscribe((flightList) => {
+      this.flightList = flightList;
+      this.flightList.forEach((flight) =>
+        this.flightCalculator.calculateFlightDuration(flight)
+      );
+    });
   }
 
   changeFlightType(flightType: FlightType): void {
@@ -77,6 +88,11 @@ export class AppComponent implements OnInit {
       this.flightSearchForm.controls.return.setValidators([
         Validators.required,
       ]);
+      const returnDate = new Date(
+        this.flightSearchForm.controls.departure.value
+      );
+      returnDate.setDate(returnDate.getDate() + 1);
+      this.flightSearchForm.controls.return.setValue(returnDate);
     } else {
       this.flightSearchForm.controls.return.clearValidators();
     }
@@ -102,7 +118,24 @@ export class AppComponent implements OnInit {
 
   searchFlights(): void {
     if (this.validateForm()) {
-      this.flightSearchData = this.flightSearchForm.value;
+      this.flightSearchData = {
+        ...this.flightSearchForm.value,
+        flightType: this.flightType,
+      };
     }
+  }
+
+  sliderChanged(event: MatSliderChange) {
+    this.flightPriceRefiner = event.value;
+  }
+
+  formatLabel(value: number) {
+    if (value >= 999999) {
+      return Math.round(value / 1000000) + 'M';
+    }
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'K';
+    }
+    return value;
   }
 }

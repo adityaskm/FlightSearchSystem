@@ -10,8 +10,11 @@ import { DatePickerModule } from './shared/module/date-picker/date-picker.module
 
 import { HttpClientModule } from '@angular/common/http';
 import { FlightListModule } from './shared/module/flight-list/flight-list.module';
+import { MatSliderModule } from '@angular/material/slider';
 
 const subModules = [DatePickerModule, FlightListModule];
+
+const angularMaterialModules = [MatSliderModule];
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +24,7 @@ const subModules = [DatePickerModule, FlightListModule];
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ...angularMaterialModules,
     ...subModules,
   ],
   providers: [],

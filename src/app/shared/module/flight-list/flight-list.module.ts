@@ -4,13 +4,34 @@ import { FlightListComponent } from './flight-list/flight-list.component';
 import { SingleFlightItemComponent } from './single-flight-item/single-flight-item.component';
 import { MultiFlightItemComponent } from './multi-flight-item/multi-flight-item.component';
 
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { CityNameModule } from '../../pipes/city-name/city-name.module';
+import { TwoDigitPipeModule } from '../../pipes/two-digit-pipe/two-digit-pipe.module';
+import { FlightInfoComponent } from './flight-info/flight-info.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { LayoverFlightDurationModule } from '../../pipes/layover-flight-duration/layover-flight-duration.module';
 
+const angularMaterialModules = [MatExpansionModule];
+const libraryModules = [PerfectScrollbarModule];
+const sharedModuels = [
+  CityNameModule,
+  TwoDigitPipeModule,
+  LayoverFlightDurationModule,
+];
 
 @NgModule({
-  declarations: [FlightListComponent, SingleFlightItemComponent, MultiFlightItemComponent],
-  imports: [
-    CommonModule
+  declarations: [
+    FlightListComponent,
+    SingleFlightItemComponent,
+    MultiFlightItemComponent,
+    FlightInfoComponent,
   ],
-  exports: [FlightListComponent]
+  imports: [
+    CommonModule,
+    ...angularMaterialModules,
+    ...libraryModules,
+    ...sharedModuels,
+  ],
+  exports: [FlightListComponent],
 })
-export class FlightListModule { }
+export class FlightListModule {}
