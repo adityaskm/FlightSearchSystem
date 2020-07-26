@@ -7,7 +7,7 @@ import { LayoverFlight } from '../../model/misc.model';
 })
 export class LayoverFlightDurationPipe implements PipeTransform {
   constructor(private flightCalculator: FlightCalculatorService) {}
-  transform(layoverFlight: LayoverFlight): Date {
+  transform(layoverFlight: LayoverFlight): number {
     const flight1Departure = this.flightCalculator.getFlightTime(
       layoverFlight.flight1,
       'departureTime'
@@ -16,6 +16,6 @@ export class LayoverFlightDurationPipe implements PipeTransform {
       layoverFlight.flight2,
       'arrivalTime'
     );
-    return new Date(flight2Arrival - flight1Departure);
+    return flight2Arrival - flight1Departure;
   }
 }

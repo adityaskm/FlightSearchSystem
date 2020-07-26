@@ -53,7 +53,12 @@
     >
       <div class="row m-0">
         <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-info text-center">
-          {{ layoverFlight | layoverFlightDuration | date: "hh:mm" }}
+          {{
+            layoverFlight
+              | layoverFlightDuration
+              | millisecondsToDuration
+              | twoDigit
+          }}
         </div>
         <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-center">
           <span class="small text-muted">Total Duration</span>
@@ -80,6 +85,17 @@
         [flight]="layoverFlight.flight1"
         [mode]="'multi'"
       ></app-flight-info>
+      <div class="flight-layover text-center px-4">
+        <div
+          class="flight-layover-time bg-light border px-4 py-1 text-black-50 m-2 rounded"
+        >
+          Layover Time
+          {{
+            layoverFlight | flightLayover | millisecondsToDuration | twoDigit
+          }}
+        </div>
+        <hr class="primary m-0 flight-layover-hr position-absolute w-100" />
+      </div>
       <app-flight-info
         [flight]="layoverFlight.flight2"
         [mode]="'multi'"

@@ -9,7 +9,7 @@ export interface Flight {
   name: string;
   origin: string;
   price: number;
-  duration: Date;
+  duration: number;
 }
 
 export interface FlightSearchData {

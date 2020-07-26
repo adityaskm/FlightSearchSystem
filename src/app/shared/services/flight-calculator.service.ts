@@ -93,6 +93,7 @@ export class FlightCalculatorService {
   calculateFlightDuration(flight: Flight): void {
     const arrival = this.getFlightTime(flight, 'arrivalTime');
     const departure = this.getFlightTime(flight, 'departureTime');
-    flight.duration = new Date(departure - arrival);
+    console.log(flight, departure, arrival);
+    flight.duration = arrival - departure;
   }
 }

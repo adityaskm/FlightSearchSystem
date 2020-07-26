@@ -46,7 +46,7 @@
   >
     <div class="row m-0">
       <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-info text-center">
-        {{ flight.duration | date: "hh:mm" }}
+        {{ flight.duration | millisecondsToDuration | twoDigit }}
       </div>
       <div class="col-sm-6 col-md-12 col-lg-12 p-0 text-center">
         <span class="small text-muted">Non Stop</span>
@@ -63,6 +63,12 @@
   <div
     class="col-sm-12 col-md-2 col-lg-2 p-0 d-flex justify-content-center align-items-center"
   >
-    <button class="btn btn-primary" *ngIf="mode === 'single'" (click)="bookFlight()">Book</button>
+    <button
+      class="btn btn-primary"
+      *ngIf="mode === 'single'"
+      (click)="bookFlight()"
+    >
+      Book
+    </button>
   </div>
 </div>

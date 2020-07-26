@@ -10,6 +10,8 @@ import { TwoDigitPipeModule } from '../../pipes/two-digit-pipe/two-digit-pipe.mo
 import { FlightInfoComponent } from './flight-info/flight-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { LayoverFlightDurationModule } from '../../pipes/layover-flight-duration/layover-flight-duration.module';
+import { LayoverFlightDelayModule } from '../../pipes/layover-flight-delay/layover-flight-delay.module';
+import { MillisecondsToDurationModule } from '../../pipes/milliseconds-to-duration/milliseconds-to-duration.module';
 
 const angularMaterialModules = [MatExpansionModule];
 const libraryModules = [PerfectScrollbarModule];
@@ -17,6 +19,8 @@ const sharedModuels = [
   CityNameModule,
   TwoDigitPipeModule,
   LayoverFlightDurationModule,
+  LayoverFlightDelayModule,
+  MillisecondsToDurationModule,
 ];
 
 @NgModule({

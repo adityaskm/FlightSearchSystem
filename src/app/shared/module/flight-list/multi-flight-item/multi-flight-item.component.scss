@@ -1,0 +1,14 @@
+.flight-layover {
+  // margin-top: -0.5rem;
+  // margin-bottom: -0.5rem;
+  position: relative;
+  .flight-layover-time {
+    display: inline-block;
+    margin: auto;
+    position: relative;
+    z-index: 9;
+  }
+  .flight-layover-hr {
+    top: 50%;
+  }
+}
