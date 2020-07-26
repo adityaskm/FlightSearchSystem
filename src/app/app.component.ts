@@ -52,10 +52,10 @@ export class AppComponent implements OnInit {
   flightDestinations: string[] = [];
 
   flightSearchForm = new FormGroup({
-    origin: new FormControl('Pune (PNQ)', [Validators.required]),
-    destination: new FormControl('Delhi (DEL)', [Validators.required]),
-    departure: new FormControl(new Date('2020/11/01'), [Validators.required]),
-    return: new FormControl(new Date('2020/11/02')),
+    origin: new FormControl('', [Validators.required]),
+    destination: new FormControl('', [Validators.required]),
+    departure: new FormControl(new Date(), [Validators.required]),
+    return: new FormControl(new Date()),
     passengers: new FormControl(1, [
       Validators.required,
       Validators.min(1),
